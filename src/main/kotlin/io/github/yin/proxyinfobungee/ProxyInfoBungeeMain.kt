@@ -9,8 +9,8 @@ import net.md_5.bungee.event.EventHandler
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
 
-
 class ProxyInfoBungeeMain : Plugin(), Listener {
+
     companion object {
         lateinit var instance: ProxyInfoBungeeMain
         const val prefix = "§f[§3代理信息§f] "
@@ -22,14 +22,15 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
     override fun onEnable() {
         instance = this
         proxy.console.sendMessage(TextComponent(prefix + "插件开始加载 " + description.version))
+
         proxy.pluginManager.registerListener(this, this)
     }
 
     override fun onDisable() {
         proxy.console.sendMessage(TextComponent(prefix + "插件开始卸载 " + description.version))
+
+        proxy.pluginManager.unregisterListener(this)
     }
-
-
 
     @EventHandler(priority = 3)
     fun onPostLogin(event: PostLoginEvent) {
