@@ -6,6 +6,7 @@ import net.md_5.bungee.api.event.*
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.event.EventHandler
+import net.md_5.bungee.event.EventPriority
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
 
@@ -21,23 +22,21 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
 
     override fun onEnable() {
         instance = this
-        proxy.console.sendMessage(TextComponent(prefix + "插件开始加载 " + description.version))
-
         proxy.pluginManager.registerListener(this, this)
+        proxy.console.sendMessage(TextComponent(prefix + "插件开始加载 " + description.version))
     }
 
     override fun onDisable() {
-        proxy.console.sendMessage(TextComponent(prefix + "插件开始卸载 " + description.version))
-
         proxy.pluginManager.unregisterListener(this)
+        proxy.console.sendMessage(TextComponent(prefix + "插件开始卸载 " + description.version))
     }
 
-    @EventHandler(priority = 3)
+    @EventHandler(priority = EventPriority.NORMAL)
     fun onPostLogin(event: PostLoginEvent) {
         logins.add(event.player.displayName)
     }
 
-    @EventHandler(priority = 3)
+    @EventHandler(priority = EventPriority.NORMAL)
     fun onServerConnected(event: ServerConnectedEvent) {
         val playerName = event.player.displayName
 
@@ -59,7 +58,7 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
         }
     }
 
-    @EventHandler(priority = 3)
+    @EventHandler(priority = EventPriority.NORMAL)
     fun onPlayerDisconnect(event: PlayerDisconnectEvent) {
         val playerName = event.player.displayName
         ProxyServer.getInstance().scheduler.runAsync(instance) {
@@ -78,7 +77,7 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
         logins.remove(playerName)
     }
 
-    @EventHandler(priority = 3)
+    @EventHandler(priority = EventPriority.NORMAL)
     fun onServerSwitch(event: ServerSwitchEvent) {
         val proxiedPlayer = event.player
         val serverName = proxiedPlayer.server.info.name
