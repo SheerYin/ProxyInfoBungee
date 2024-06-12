@@ -33,18 +33,18 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     fun onPostLogin(event: PostLoginEvent) {
-        logins.add(event.player.displayName)
+        logins.add(event.player.name)
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     fun onServerConnected(event: ServerConnectedEvent) {
-        val playerName = event.player.displayName
+        val playerName = event.player.name
 
         if (playerName in logins) {
             ProxyServer.getInstance().scheduler.runAsync(instance) {
                 val byteArrayOutputStream = ByteArrayOutputStream()
                 DataOutputStream(byteArrayOutputStream).use { out ->
-                    val players = proxy.players.joinToString(", ") { it.displayName }
+                    val players = proxy.players.joinToString(",") { it.name }
                     out.writeUTF("players")
                     out.writeUTF(players)
                 }
@@ -60,11 +60,11 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     fun onPlayerDisconnect(event: PlayerDisconnectEvent) {
-        val playerName = event.player.displayName
+        val playerName = event.player.name
         ProxyServer.getInstance().scheduler.runAsync(instance) {
             val byteArrayOutputStream = ByteArrayOutputStream()
             DataOutputStream(byteArrayOutputStream).use { out ->
-                val players = proxy.players.joinToString(", ") { it.displayName }
+                val players = proxy.players.joinToString(",") { it.name }
                 out.writeUTF("players")
                 out.writeUTF(players)
             }
@@ -91,7 +91,7 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
 
         byteArrayOutputStream.reset()
         DataOutputStream(byteArrayOutputStream).use { out ->
-            val players = proxy.players.joinToString(", ") { it.displayName }
+            val players = proxy.players.joinToString(",") { it.name }
             out.writeUTF("players")
             out.writeUTF(players)
         }
