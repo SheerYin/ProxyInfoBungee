@@ -3,4 +3,4 @@ main: io.github.yin.proxyinfobungee.ProxyInfoBungeeMain
 version: "{pluginVersion}"
 author: "尹"
 libraries:
-  - org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+  - org.jetbrains.kotlin:kotlin-stdlib:2.0.0
