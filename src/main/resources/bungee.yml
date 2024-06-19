@@ -1,6 +1,5 @@
-name: ProxyInfoBungee
-main: io.github.yin.proxyinfobungee.ProxyInfoBungeeMain
-version: "{pluginVersion}"
-author: "尹"
-libraries:
-  - org.jetbrains.kotlin:kotlin-stdlib:2.0.0
+name: ${project.name}
+main: ${project.group}.${project.name}Main
+version: "${pluginVersion}"
+author: "${pluginAuthor}"
+libraries: ${pluginLibraries}

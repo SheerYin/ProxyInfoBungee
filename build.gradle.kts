@@ -5,44 +5,42 @@ plugins {
     kotlin("jvm") version "2.0.0"
 }
 
-var pluginVersion = SimpleDateFormat("yyyy.MM.dd").format(Date()) + "-SNAPSHOT"
-group = "io.github.yin.proxyinfobungee"
-version = ""
+val lowercaseName = project.name.lowercase(Locale.getDefault())
+group = "io.github.yin.$lowercaseName"
+version = ""; val pluginVersion = SimpleDateFormat("yyyy.MM.dd").format(Date()) + "-SNAPSHOT"
+val pluginAuthor = "尹"
+val pluginLibraries = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
     mavenLocal()
+
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+
+    maven("https://libraries.minecraft.net/")
+    maven("https://repo.codemc.io/repository/nms/")
 }
 
 dependencies {
     compileOnly("net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }
 
-tasks.register("writePluginVersion") {
-    doLast {
-        file("src/main/resources/bungee.yml").apply {
-            writeText(readText().replace("{pluginVersion}", pluginVersion))
-        }
+tasks.named<ProcessResources>("processResources") {
+    filesMatching("bungee.yml") {
+        expand(
+            mapOf(
+                "project" to project,
+                "pluginVersion" to pluginVersion,
+                "pluginAuthor" to pluginAuthor,
+                "pluginLibraries" to pluginLibraries.joinToString("") { "\n  - \"$it\"" }
+            )
+        )
     }
-}
-
-tasks.register("restorePluginVersion") {
-    doLast {
-        file("src/main/resources/bungee.yml").apply {
-            writeText(readText().replace(pluginVersion, "{pluginVersion}"))
-        }
-    }
-}
-
-tasks.named("compileJava") {
-    dependsOn("writePluginVersion")
-}
-
-tasks.named("build") {
-    finalizedBy("restorePluginVersion")
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
