@@ -20,7 +20,7 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
         lateinit var lowercaseName: String
         lateinit var pluginVersion: String
         lateinit var pluginAuthor: String
-        lateinit var pluginPrefix: String
+        const val pluginPrefix = "§f[§3代理信息§f] "
 
         const val pluginChannel = "proxyinfo:channel"
 
@@ -33,7 +33,6 @@ class ProxyInfoBungeeMain : Plugin(), Listener {
         lowercaseName = pluginName.lowercase()
         pluginVersion = description.version
         pluginAuthor = description.author
-        pluginPrefix = "§f[§3代理信息§f] "
 
         proxy.console.sendMessage(TextComponent(pluginPrefix + "插件开始加载 " + pluginVersion))
 
