@@ -26,7 +26,7 @@ val minecraftVersion = "1.21"
 dependencies {
     compileOnly("net.md-5:bungeecord-api:$minecraftVersion-R0.1-SNAPSHOT")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }
 
 tasks.named<ProcessResources>("processResources") {
