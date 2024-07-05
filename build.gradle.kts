@@ -18,12 +18,13 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 
-    maven("https://libraries.minecraft.net/")
-    maven("https://repo.codemc.io/repository/nms/")
+//    maven("https://libraries.minecraft.net/")
+//    maven("https://repo.codemc.io/repository/nms/")
 }
 
+val minecraftVersion = "1.21"
 dependencies {
-    compileOnly("net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT")
+    compileOnly("net.md-5:bungeecord-api:$minecraftVersion-R0.1-SNAPSHOT")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }
